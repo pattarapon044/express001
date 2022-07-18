@@ -1,0 +1,20 @@
+const express = require("express");
+const cors = require("cors");
+const logger = require("morgan");
+const cookieParser = require("cookie-parser");
+const { port, listen } = require("./app.config");
+const router = require("./router");
+const fileUpload = require("express-fileupload");
+const path = require("path");
+
+const app = express();
+app.use(cors());
+app.use(logger("dev"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
+app.use(fileUpload());
+app.use("/api", express.static(path.join(__dirname, "attachments")));
+app.use("/api/test", router.test);
+app.use("/", router.defaults);
+app.listen(port, listen);
