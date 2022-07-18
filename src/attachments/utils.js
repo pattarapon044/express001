@@ -61,6 +61,7 @@ module.exports = {
           }
         }
       }
+      req.body = req.body.data
       req.files = temp;
       next();
     };
